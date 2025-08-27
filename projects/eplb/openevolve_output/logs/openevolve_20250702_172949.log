@@ -1,0 +1,48 @@
+2025-07-02 17:29:49,081 - openevolve.controller - INFO - Logging to projects/eplb/openevolve_output/logs/openevolve_20250702_172949.log
+2025-07-02 17:29:49,103 - openevolve.controller - INFO - Set random seed to 42 for reproducibility
+2025-07-02 17:29:49,229 - openevolve.llm.openai - INFO - Initialized OpenAI LLM with model: gemini-2.5-flash
+2025-07-02 17:29:49,266 - openevolve.llm.openai - INFO - Initialized OpenAI LLM with model: gemini-2.5-flash-lite-preview-06-17
+2025-07-02 17:29:49,266 - openevolve.llm.ensemble - INFO - Initialized LLM ensemble with models: gemini-2.5-flash (weight: 0.80), gemini-2.5-flash-lite-preview-06-17 (weight: 0.20)
+2025-07-02 17:29:49,303 - openevolve.llm.openai - INFO - Initialized OpenAI LLM with model: gemini-2.5-flash
+2025-07-02 17:29:49,340 - openevolve.llm.openai - INFO - Initialized OpenAI LLM with model: gemini-2.5-flash-lite-preview-06-17
+2025-07-02 17:29:49,340 - openevolve.llm.ensemble - INFO - Initialized LLM ensemble with models: gemini-2.5-flash (weight: 0.80), gemini-2.5-flash-lite-preview-06-17 (weight: 0.20)
+2025-07-02 17:29:49,340 - openevolve.prompt.sampler - INFO - Initialized prompt sampler
+2025-07-02 17:29:49,340 - openevolve.prompt.sampler - INFO - Initialized prompt sampler
+2025-07-02 17:29:49,340 - openevolve.prompt.sampler - INFO - Set custom templates: system=evaluator_system_message, user=None
+2025-07-02 17:29:49,341 - openevolve.database - INFO - Initialized program database with 0 programs
+2025-07-02 17:29:54,110 - openevolve.evaluator - INFO - Successfully loaded evaluation function from projects/eplb/evaluator.py
+2025-07-02 17:29:54,111 - openevolve.evaluator - INFO - Initialized evaluator with projects/eplb/evaluator.py
+2025-07-02 17:29:54,111 - openevolve.controller - INFO - Initialized OpenEvolve with projects/eplb/initial_program.py and projects/eplb/evaluator.py
+2025-07-02 17:29:54,123 - openevolve.database - INFO - Loaded database metadata with last_iteration=310
+2025-07-02 17:29:55,728 - openevolve.database - INFO - Reconstructed islands: restored 340 programs to islands
+2025-07-02 17:29:55,728 - openevolve.database - INFO - Loaded database with 340 programs from projects/eplb/openevolve_output/checkpoints/checkpoint_310/
+2025-07-02 17:29:55,736 - openevolve.database - INFO - Island Status:
+2025-07-02 17:29:55,736 - openevolve.database - INFO -  * Island 0: 75 programs, best=0.2315, avg=0.1205, diversity=2134.98, gen=66
+2025-07-02 17:29:55,737 - openevolve.database - INFO -    Island 1: 68 programs, best=0.1920, avg=0.1059, diversity=1735.45, gen=59
+2025-07-02 17:29:55,737 - openevolve.database - INFO -    Island 2: 64 programs, best=0.2315, avg=0.1277, diversity=2830.43, gen=56
+2025-07-02 17:29:55,738 - openevolve.database - INFO -    Island 3: 68 programs, best=0.2335, avg=0.1062, diversity=4380.68, gen=60
+2025-07-02 17:29:55,738 - openevolve.database - INFO -    Island 4: 65 programs, best=0.2315, avg=0.1401, diversity=228.15, gen=56
+2025-07-02 17:29:55,738 - openevolve.controller - INFO - Skipping initial program addition (resuming from iteration 310 with 340 existing programs)
+2025-07-02 17:29:55,739 - openevolve.controller - INFO - Starting evolution from iteration 310 for 1000 iterations (total: 1310)
+2025-07-02 17:29:55,739 - openevolve.controller - INFO - Using island-based evolution with 5 islands
+2025-07-02 17:29:55,747 - openevolve.database - INFO - Island Status:
+2025-07-02 17:29:55,747 - openevolve.database - INFO -  * Island 0: 75 programs, best=0.2315, avg=0.1205, diversity=2134.98, gen=66
+2025-07-02 17:29:55,747 - openevolve.database - INFO -    Island 1: 68 programs, best=0.1920, avg=0.1059, diversity=1735.45, gen=59
+2025-07-02 17:29:55,747 - openevolve.database - INFO -    Island 2: 64 programs, best=0.2315, avg=0.1277, diversity=2830.43, gen=56
+2025-07-02 17:29:55,748 - openevolve.database - INFO -    Island 3: 68 programs, best=0.2335, avg=0.1062, diversity=4380.68, gen=60
+2025-07-02 17:29:55,748 - openevolve.database - INFO -    Island 4: 65 programs, best=0.2315, avg=0.1401, diversity=228.15, gen=56
+2025-07-02 17:29:55,750 - openevolve.llm.ensemble - INFO - Sampled model: gemini-2.5-flash-lite-preview-06-17
+2025-07-02 17:29:55,750 - openevolve.llm.openai - WARNING - Skipping seed parameter as Google AI Studio endpoint doesn't support it. Reproducibility may be limited.
+2025-07-02 17:30:21,260 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2025-07-02 17:30:21,266 - openevolve.evaluator - ERROR - Error in cascade evaluation: [Errno 2] No such file or directory: '/home/bowen/vllm/expert-load/expert-load-20250627_103226-1200.json'
+2025-07-02 17:30:21,267 - openevolve.evaluator - INFO - Evaluated program eaa7d63a-5128-426f-81c6-a76ffe9dee9e in 0.00s: stage1_passed=0.0000, error=0.0000
+2025-07-02 17:30:21,267 - openevolve.controller - INFO - Iteration 311: Child eaa7d63a-5128-426f-81c6-a76ffe9dee9e from parent 8e2b39ca-b7f6-443e-990f-ed7087054575 in 25.52s. Metrics: stage1_passed=0.0000, error=0.0000 (Δ: )
+2025-07-02 17:30:21,270 - openevolve.llm.ensemble - INFO - Sampled model: gemini-2.5-flash-lite-preview-06-17
+2025-07-02 17:30:21,270 - openevolve.llm.openai - WARNING - Skipping seed parameter as Google AI Studio endpoint doesn't support it. Reproducibility may be limited.
+2025-07-02 17:30:27,171 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2025-07-02 17:30:27,175 - openevolve.evaluator - ERROR - Error in cascade evaluation: [Errno 2] No such file or directory: '/home/bowen/vllm/expert-load/expert-load-20250627_103226-1200.json'
+2025-07-02 17:30:27,175 - openevolve.evaluator - INFO - Evaluated program 751b58f9-16f6-4d2a-9c9a-f2cf0769d864 in 0.00s: stage1_passed=0.0000, error=0.0000
+2025-07-02 17:30:27,176 - openevolve.controller - INFO - Iteration 312: Child 751b58f9-16f6-4d2a-9c9a-f2cf0769d864 from parent 38d90ddd-dd36-45b9-8475-b824c33d2cd6 in 5.91s. Metrics: stage1_passed=0.0000, error=0.0000 (Δ: )
+2025-07-02 17:30:27,179 - openevolve.llm.ensemble - INFO - Sampled model: gemini-2.5-flash
+2025-07-02 17:30:27,179 - openevolve.llm.openai - WARNING - Skipping seed parameter as Google AI Studio endpoint doesn't support it. Reproducibility may be limited.
+2025-07-02 17:31:11,173 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"

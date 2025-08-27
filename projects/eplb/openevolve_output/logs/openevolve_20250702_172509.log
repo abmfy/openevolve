@@ -1,0 +1,12 @@
+2025-07-02 17:25:09,464 - openevolve.controller - INFO - Logging to projects/eplb/openevolve_output/logs/openevolve_20250702_172509.log
+2025-07-02 17:25:09,496 - openevolve.controller - INFO - Set random seed to 42 for reproducibility
+2025-07-02 17:25:09,698 - openevolve.llm.openai - INFO - Initialized OpenAI LLM with model: gemini-2.5-flash
+2025-07-02 17:25:09,735 - openevolve.llm.openai - INFO - Initialized OpenAI LLM with model: gemini-2.5-flash-lite-preview-06-17
+2025-07-02 17:25:09,735 - openevolve.llm.ensemble - INFO - Initialized LLM ensemble with models: gemini-2.5-flash (weight: 0.80), gemini-2.5-flash-lite-preview-06-17 (weight: 0.20)
+2025-07-02 17:25:09,772 - openevolve.llm.openai - INFO - Initialized OpenAI LLM with model: gemini-2.5-flash
+2025-07-02 17:25:09,808 - openevolve.llm.openai - INFO - Initialized OpenAI LLM with model: gemini-2.5-flash-lite-preview-06-17
+2025-07-02 17:25:09,808 - openevolve.llm.ensemble - INFO - Initialized LLM ensemble with models: gemini-2.5-flash (weight: 0.80), gemini-2.5-flash-lite-preview-06-17 (weight: 0.20)
+2025-07-02 17:25:09,808 - openevolve.prompt.sampler - INFO - Initialized prompt sampler
+2025-07-02 17:25:09,808 - openevolve.prompt.sampler - INFO - Initialized prompt sampler
+2025-07-02 17:25:09,808 - openevolve.prompt.sampler - INFO - Set custom templates: system=evaluator_system_message, user=None
+2025-07-02 17:25:09,808 - openevolve.database - INFO - Initialized program database with 0 programs

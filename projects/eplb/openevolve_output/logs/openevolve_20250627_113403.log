@@ -1,0 +1,44 @@
+2025-06-27 11:34:03,032 - openevolve.controller - INFO - Logging to projects/eplb/openevolve_output/logs/openevolve_20250627_113403.log
+2025-06-27 11:34:03,068 - openevolve.controller - INFO - Set random seed to 42 for reproducibility
+2025-06-27 11:34:03,206 - openevolve.llm.openai - INFO - Initialized OpenAI LLM with model: gemini-2.5-flash
+2025-06-27 11:34:03,245 - openevolve.llm.openai - INFO - Initialized OpenAI LLM with model: gemini-2.5-flash-lite-preview-06-17
+2025-06-27 11:34:03,246 - openevolve.llm.ensemble - INFO - Initialized LLM ensemble with models: gemini-2.5-flash (weight: 0.80), gemini-2.5-flash-lite-preview-06-17 (weight: 0.20)
+2025-06-27 11:34:03,284 - openevolve.llm.openai - INFO - Initialized OpenAI LLM with model: gemini-2.5-flash
+2025-06-27 11:34:03,322 - openevolve.llm.openai - INFO - Initialized OpenAI LLM with model: gemini-2.5-flash-lite-preview-06-17
+2025-06-27 11:34:03,323 - openevolve.llm.ensemble - INFO - Initialized LLM ensemble with models: gemini-2.5-flash (weight: 0.80), gemini-2.5-flash-lite-preview-06-17 (weight: 0.20)
+2025-06-27 11:34:03,324 - openevolve.prompt.sampler - INFO - Initialized prompt sampler
+2025-06-27 11:34:03,324 - openevolve.prompt.sampler - INFO - Initialized prompt sampler
+2025-06-27 11:34:03,325 - openevolve.prompt.sampler - INFO - Set custom templates: system=evaluator_system_message, user=None
+2025-06-27 11:34:03,325 - openevolve.database - INFO - Initialized program database with 0 programs
+2025-06-27 11:34:07,000 - openevolve.evaluator - INFO - Successfully loaded evaluation function from projects/eplb/evaluator.py
+2025-06-27 11:34:07,001 - openevolve.evaluator - INFO - Initialized evaluator with projects/eplb/evaluator.py
+2025-06-27 11:34:07,002 - openevolve.controller - INFO - Initialized OpenEvolve with projects/eplb/initial_program.py and projects/eplb/evaluator.py
+2025-06-27 11:34:07,002 - openevolve.controller - INFO - Adding initial program to database
+2025-06-27 11:34:15,726 - openevolve.evaluator - INFO - Evaluated program 272a20d6-4d36-4a05-87ed-39d50730742b in 8.72s: balancedness_score=0.2983, speed_score=0.0364, combined_score=0.1674
+2025-06-27 11:34:15,727 - openevolve.controller - INFO - Starting evolution from iteration 0 for 1000 iterations (total: 1000)
+2025-06-27 11:34:15,728 - openevolve.controller - INFO - Using island-based evolution with 5 islands
+2025-06-27 11:34:15,729 - openevolve.database - INFO - Island Status:
+2025-06-27 11:34:15,729 - openevolve.database - INFO -  * Island 0: 1 programs, best=0.1674, avg=0.1674, diversity=0.00, gen=0
+2025-06-27 11:34:15,730 - openevolve.database - INFO -    Island 1: 0 programs, best=0.0000, avg=0.0000, diversity=0.00, gen=0
+2025-06-27 11:34:15,731 - openevolve.database - INFO -    Island 2: 0 programs, best=0.0000, avg=0.0000, diversity=0.00, gen=0
+2025-06-27 11:34:15,731 - openevolve.database - INFO -    Island 3: 0 programs, best=0.0000, avg=0.0000, diversity=0.00, gen=0
+2025-06-27 11:34:15,732 - openevolve.database - INFO -    Island 4: 0 programs, best=0.0000, avg=0.0000, diversity=0.00, gen=0
+2025-06-27 11:34:15,733 - openevolve.llm.ensemble - INFO - Sampled model: gemini-2.5-flash-lite-preview-06-17
+2025-06-27 11:34:15,733 - openevolve.llm.openai - WARNING - Skipping seed parameter as Google AI Studio endpoint doesn't support it. Reproducibility may be limited.
+2025-06-27 11:34:51,884 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2025-06-27 11:34:51,914 - openevolve.evaluator - INFO - Evaluated program ee621568-e022-4e7f-ad8c-7a17c21172b0 in 0.02s: balancedness_score=0.0000, speed_score=0.0000, combined_score=0.0000, error=Index tensor must have the same number of dimensions as input tensor
+2025-06-27 11:34:51,915 - openevolve.controller - INFO - Iteration 1: Child ee621568-e022-4e7f-ad8c-7a17c21172b0 from parent 272a20d6-4d36-4a05-87ed-39d50730742b in 36.18s. Metrics: balancedness_score=0.0000, speed_score=0.0000, combined_score=0.0000, error=Index tensor must have the same number of dimensions as input tensor (Δ: balancedness_score=-0.2983, speed_score=-0.0364, combined_score=-0.1674)
+2025-06-27 11:34:51,916 - openevolve.llm.ensemble - INFO - Sampled model: gemini-2.5-flash-lite-preview-06-17
+2025-06-27 11:34:51,917 - openevolve.llm.openai - WARNING - Skipping seed parameter as Google AI Studio endpoint doesn't support it. Reproducibility may be limited.
+2025-06-27 11:35:15,892 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2025-06-27 11:35:15,910 - openevolve.evaluator - INFO - Evaluated program c4b65ec9-7c11-4cb2-8724-e642d6ee1a0f in 0.01s: balancedness_score=0.0000, speed_score=0.0000, combined_score=0.0000, error=Boolean value of Tensor with more than one value is ambiguous
+2025-06-27 11:35:15,911 - openevolve.controller - INFO - Iteration 2: Child c4b65ec9-7c11-4cb2-8724-e642d6ee1a0f from parent 272a20d6-4d36-4a05-87ed-39d50730742b in 24.00s. Metrics: balancedness_score=0.0000, speed_score=0.0000, combined_score=0.0000, error=Boolean value of Tensor with more than one value is ambiguous (Δ: balancedness_score=-0.2983, speed_score=-0.0364, combined_score=-0.1674)
+2025-06-27 11:35:15,914 - openevolve.llm.ensemble - INFO - Sampled model: gemini-2.5-flash
+2025-06-27 11:35:15,915 - openevolve.llm.openai - WARNING - Skipping seed parameter as Google AI Studio endpoint doesn't support it. Reproducibility may be limited.
+2025-06-27 11:36:15,976 - openevolve.llm.openai - WARNING - Timeout on attempt 1/4. Retrying...
+2025-06-27 11:37:15,218 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2025-06-27 11:37:20,990 - openevolve.llm.openai - WARNING - Timeout on attempt 2/4. Retrying...
+2025-06-27 11:37:34,022 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2025-06-27 11:38:26,049 - openevolve.llm.openai - WARNING - Timeout on attempt 3/4. Retrying...
+2025-06-27 11:38:54,239 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2025-06-27 11:39:51,207 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
