@@ -150,9 +150,9 @@ def evaluate(program_path: str) -> EvaluationResult:
             end_time = time.perf_counter()
             balancedness_scores_gpu.append(balancedness_score_gpu)
             balancedness_scores_expert.append(balancedness_score_expert)
-            print(f'time_algorithm: {end_time_algorithm - start_time}, time_inference: {end_time - end_time_algorithm}')
+            print(f'time_algorithm: {end_time_algorithm - start_time}, time_inference: {end_time - start_time}')
             times_algorithm.append(end_time_algorithm - start_time)
-            times_inference.append(end_time - end_time_algorithm)
+            times_inference.append(end_time - start_time)
             
         avg_balancedness_score_gpu = sum(balancedness_scores_gpu) / len(balancedness_scores_gpu)
         avg_balancedness_score_expert = sum(balancedness_scores_expert) / len(balancedness_scores_expert)
