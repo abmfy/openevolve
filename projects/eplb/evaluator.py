@@ -7,7 +7,7 @@ from typing import TypedDict
 
 import torch
 
-WORKLOAD_PATH = "/home/bowen/vllm/expert-load/expert-load-20250627_103226-1200.json"
+WORKLOAD_PATH = "/data/nfs01/bowen/vllm/eplb-bench/expert-load/expert-load-20250905_205216-1200.json"
 REBALANCE_INTERVAL = 100
 
 NUM_REPLICAS = 288
@@ -32,12 +32,19 @@ def load_workloads(path: str) -> list[torch.Tensor]:
     return workloads
 
 class EvaluationResult(TypedDict, total=False):
-    balancedness_score: float
+    balancedness_score_gpu: float
+    balancedness_score_expert: float
+    times_algorithm: float
+    times_inference: float
     speed_score: float
     combined_score: float
     error: str
 
-def simulate_inference(log2phy: torch.Tensor, logcnt: torch.Tensor, workload: torch.Tensor) -> float:
+def simulate_inference(
+        log2phy: torch.Tensor,
+        logcnt: torch.Tensor,
+        workload: torch.Tensor,
+    ) -> tuple[float, float]:
     '''
     Simulate a MoE inference with the given expert mapping, and return the balancedness factor.
     '''
@@ -76,21 +83,29 @@ def simulate_inference(log2phy: torch.Tensor, logcnt: torch.Tensor, workload: to
     # 计算 balancedness
     total_load = total_physical_load.sum()
     if total_load == 0:
-        return 0.0
+        return 0.0, 0.0
+    
+    # Compute expert load
+    expert_layer_avg = total_physical_load.mean(dim=1).sum().item()
+    expert_layer_max = total_physical_load.max(dim=1).values.sum().item()
+    balancedness_expert = expert_layer_avg / expert_layer_max
+
+    # 计算 GPU 负载
+    gpu_load = total_physical_load.view(num_layers, NUM_GPUS, -1).sum(dim=2)
     
     # 计算每层的平均负载和最大负载，然后求和
-    layer_avg = total_physical_load.mean(dim=1)  # (num_layers,)
-    layer_max = total_physical_load.max(dim=1).values  # (num_layers,)
+    layer_avg = gpu_load.mean(dim=1)  # (num_layers,)
+    layer_max = gpu_load.max(dim=1).values  # (num_layers,)
     
     avg_load = layer_avg.sum().item()
     max_load = layer_max.sum().item()
     
     # 计算 balancedness: avg_load / max_load
-    balancedness = avg_load / max_load if max_load > 0 else 0.0
+    balancedness_gpu = avg_load / max_load if max_load > 0 else 0.0
     
-    print(f'balancedness: {balancedness}')
+    # print(f'balancedness per GPU: {balancedness}, balancedness per expert: {balancedness_expert}')
     
-    return balancedness
+    return balancedness_gpu, balancedness_expert
 
 def evaluate(program_path: str) -> EvaluationResult:
     workloads = load_workloads(WORKLOAD_PATH)
@@ -105,7 +120,10 @@ def evaluate(program_path: str) -> EvaluationResult:
         if not hasattr(program, "rebalance_experts"):
             print('Error: program does not have `rebalance_experts` function')
             return {
-                "balancedness_score": 0.0,
+                "balancedness_score_gpu": 0.0,
+                "balancedness_score_expert": 0.0,
+                "times_algorithm": 0.0,
+                "times_inference": 0.0,
                 "speed_score": 0.0,
                 "combined_score": 0.0,
                 "error": "Missing `rebalance_experts` function",
@@ -114,8 +132,10 @@ def evaluate(program_path: str) -> EvaluationResult:
         if not hasattr(program, "rebalance_experts"):
             raise ValueError("Program does not have rebalance_experts function")
         
-        balancedness_scores = []
-        times = []
+        balancedness_scores_gpu = []
+        balancedness_scores_expert = []
+        times_algorithm = []
+        times_inference = []
         for i in range(len(workloads) - 1):
             start_time = time.perf_counter()
             _, log2phy, logcnt = program.rebalance_experts(
@@ -125,17 +145,27 @@ def evaluate(program_path: str) -> EvaluationResult:
                 NUM_NODES,
                 NUM_GPUS,
             )
-            balancedness_score = simulate_inference(log2phy, logcnt, workloads[i + 1])
+            end_time_algorithm = time.perf_counter()
+            balancedness_score_gpu, balancedness_score_expert = simulate_inference(log2phy, logcnt, workloads[i + 1])
             end_time = time.perf_counter()
-            balancedness_scores.append(balancedness_score)
-            times.append(end_time - start_time)
-        avg_balancedness_score = sum(balancedness_scores) / len(balancedness_scores)
-        avg_time = sum(times) / len(times)
-        speed_score = 0.02 / avg_time
-        print(f'avg_time: {avg_time}, speed_score: {speed_score}')
-        combined_score = (avg_balancedness_score + speed_score) / 2
+            balancedness_scores_gpu.append(balancedness_score_gpu)
+            balancedness_scores_expert.append(balancedness_score_expert)
+            print(f'time_algorithm: {end_time_algorithm - start_time}, time_inference: {end_time - end_time_algorithm}')
+            times_algorithm.append(end_time_algorithm - start_time)
+            times_inference.append(end_time - end_time_algorithm)
+            
+        avg_balancedness_score_gpu = sum(balancedness_scores_gpu) / len(balancedness_scores_gpu)
+        avg_balancedness_score_expert = sum(balancedness_scores_expert) / len(balancedness_scores_expert)
+        avg_time_algorithm = sum(times_algorithm) / len(times_algorithm)
+        avg_time_inference = sum(times_inference) / len(times_inference)
+        speed_score = 0.002 / avg_time_inference
+        print(f'avg_time_algorithm: {avg_time_algorithm}, avg_time_inference: {avg_time_inference}, speed_score: {speed_score}')
+        combined_score = (avg_balancedness_score_expert + speed_score) / 2
         return {
-            "balancedness_score": float(avg_balancedness_score),
+            "balancedness_score_gpu": float(avg_balancedness_score_gpu),
+            "balancedness_score_expert": float(avg_balancedness_score_expert),
+            "times_algorithm": float(avg_time_algorithm),
+            "times_inference": float(avg_time_inference),
             "speed_score": float(speed_score),
             "combined_score": float(combined_score),
         }
@@ -143,16 +173,11 @@ def evaluate(program_path: str) -> EvaluationResult:
         traceback.print_exc()
         print(f'Error during evaluation: {str(e)}')
         return {
-            "balancedness_score": 0.0,
+            "balancedness_score_gpu": 0.0,
+            "balancedness_score_expert": 0.0,
+            "times_algorithm": 0.0,
+            "times_inference": 0.0,
             "speed_score": 0.0,
             "combined_score": 0.0,
             "error": str(e),
         }
-    
-    return {
-        "balancedness_score": 0.0,
-        "speed_score": 0.0,
-        "combined_score": 0.0,
-        "error": "No error",
-    }
-    
